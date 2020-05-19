@@ -2,6 +2,7 @@ package com.spotify.project.authorisation;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,18 @@ public class SpotifyAuthorisation {
 
     public URI authorisationCodeUri(){
         return authorizationCodeUriRequest.execute();
+    }
+
+    public void authorisationCode(){
+        String code = authorisationCodeUri().toString();
+        AuthorizationCodeRequest authorizationCodeRequest = api.authorizationCode(code).build();
+        try {
+            AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+            api.setAccessToken(authorizationCodeCredentials.getAccessToken());
+            api.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+        } catch (Exception e){
+            System.out.println(e.toString());
+        }
     }
 
 }

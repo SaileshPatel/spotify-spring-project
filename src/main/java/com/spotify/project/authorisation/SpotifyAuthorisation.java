@@ -51,4 +51,8 @@ public class SpotifyAuthorisation {
         }
     }
 
+    public void refreshAuthorisationCode(){
+        // https://github.com/thelinmichael/spotify-web-api-java/blob/master/examples/authorization/authorization_code/AuthorizationCodeExample.java
+    }
+
 }

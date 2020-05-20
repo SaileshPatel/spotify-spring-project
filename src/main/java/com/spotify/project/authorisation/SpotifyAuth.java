@@ -6,23 +6,29 @@ import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredential
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.net.URI;
 
-
+@Configuration
+@PropertySource(name = "myProperties", value = "application.properties")
 public class SpotifyAuth {
 
+    @Value("${spotify.clientId}")
     private String clientId;
+
+    @Value("${spotify.clientSecret}")
     private String clientSecret;
 
     private String authCode;
     private SpotifyApi api;
 
-    private URI redirectURI;
+    private URI redirectURI = SpotifyHttpManager.makeUri("http://localhost:8080/code/spotify");
 
     public SpotifyAuth() {
-        redirectURI = SpotifyHttpManager.makeUri("http://localhost:8080/code/spotify");
-
         api = new SpotifyApi.Builder()
                 .setClientId(clientId)
                 .setClientSecret(clientSecret)

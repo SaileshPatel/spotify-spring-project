@@ -7,14 +7,11 @@ import com.wrapper.spotify.requests.authorization.authorization_code.Authorizati
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 
-@Configuration
-@PropertySource(name = "myProperties", value = "application.properties")
+@Service
 public class SpotifyAuth {
 
     @Value("${spotify.clientId}")
@@ -30,8 +27,8 @@ public class SpotifyAuth {
 
     public SpotifyAuth() {
         api = new SpotifyApi.Builder()
-                .setClientId(clientId)
-                .setClientSecret(clientSecret)
+                .setClientId(getClientId())
+                .setClientSecret(getClientSecret())
                 .setRedirectUri(redirectURI)
                 .build();
     }
@@ -39,9 +36,11 @@ public class SpotifyAuth {
     public URI getAuthorisationUri()
     {
         AuthorizationCodeUriRequest authUrlCode = api.authorizationCodeUri()
+                .client_id(getClientId())
                 .response_type("code")
                 .show_dialog(true)
                 .build();
+
         return authUrlCode.execute();
     }
 
@@ -56,7 +55,6 @@ public class SpotifyAuth {
         }
     }
 
-
     public void refreshTokens() {
         AuthorizationCodeRefreshRequest authRefresh = api.authorizationCodeRefresh().build();
         try{
@@ -69,5 +67,11 @@ public class SpotifyAuth {
     }
 
 
+    public String getClientId() {
+        return clientId;
+    }
 
+    public String getClientSecret() {
+        return clientSecret;
+    }
 }

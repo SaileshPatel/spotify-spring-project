@@ -3,19 +3,18 @@ package com.spotify.project.controllers;
 import com.spotify.project.authorisation.SpotifyAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloWorldController {
+public class IndexController {
 
     @Autowired
-    SpotifyAuth auth;
+    SpotifyAuth spotifyAuth;
 
     @RequestMapping("/")
-    String hello() {
-        System.out.println(auth.getAuthorisationUri());
+    public String index(Model model){
+        model.addAttribute("auth", spotifyAuth.getAuthorisationUri());
         return "index";
     }
-
 }

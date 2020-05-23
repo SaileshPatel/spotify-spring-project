@@ -74,4 +74,6 @@ public class SpotifyAuth {
     public String getClientSecret() {
         return clientSecret;
     }
+
+    public URI getRedirectURI() { return redirectURI; }
 }

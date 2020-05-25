@@ -1,5 +1,6 @@
 package com.spotify.project.controllers;
 
+import com.google.gson.Gson;
 import com.spotify.project.authorisation.SpotifyAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;;
+import org.springframework.web.client.RestTemplate;
+import java.util.Map;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class IndexController {
@@ -47,9 +51,16 @@ public class IndexController {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(bodyParams, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("https://accounts.spotify.com/api/token", request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("https://accounts.spotify.com/api/token",
+                request, String.class);
 
-        System.out.println(response.getBody());
+        Map<String, String> jsonResponse = spotifyTokens(response);
+
+        spotifyAuth.getApi().setAccessToken(jsonResponse.get("access_token"));
+        spotifyAuth.getApi().setRefreshToken(jsonResponse.get("refresh_token"));
+
+        // access_token, token_type, expires_in, refresh_token, scope
+
 
         return "auth";
     }
@@ -59,4 +70,14 @@ public class IndexController {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
+    private Map<String, String> spotifyTokens(ResponseEntity<String> response) {
+        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        Gson gson = new Gson();
+
+        Map<String, String> map = gson.fromJson(response.getBody(), type);
+
+        return map;
+    }
+
 }

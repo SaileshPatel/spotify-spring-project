@@ -76,4 +76,6 @@ public class SpotifyAuth {
     }
 
     public URI getRedirectURI() { return redirectURI; }
+
+    public SpotifyApi getApi() { return api; }
 }

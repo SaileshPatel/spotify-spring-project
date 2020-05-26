@@ -2,9 +2,6 @@ package com.spotify.project.authorisation;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
-import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
-import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
-import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import org.springframework.beans.factory.annotation.Value;

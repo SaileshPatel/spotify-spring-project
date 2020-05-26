@@ -18,7 +18,6 @@ public class SpotifyAuth {
     @Value("${spotify.clientSecret}")
     private String clientSecret;
 
-    private String authCode;
     private SpotifyApi api;
 
     private URI redirectURI = SpotifyHttpManager.makeUri("http://localhost:8080/code/spotify");

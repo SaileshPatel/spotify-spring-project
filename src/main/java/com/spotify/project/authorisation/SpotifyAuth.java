@@ -54,8 +54,6 @@ public class SpotifyAuth {
 
     public URI getRedirectURI() { return redirectURI; }
 
-    public SpotifyApi getApi() { return api; }
-
     public void setAccessToken(String accessToken) {
         api.setAccessToken(accessToken);
     }

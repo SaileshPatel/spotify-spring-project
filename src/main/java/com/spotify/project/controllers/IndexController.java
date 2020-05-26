@@ -57,11 +57,17 @@ public class IndexController {
         ResponseEntity<String> response = restTemplate.postForEntity("https://accounts.spotify.com/api/token",
                 request, String.class);
 
+        // access_token, token_type, expires_in, refresh_token, scope
         Map<String, String> jsonResponse = spotifyTokens(response);
 
         spotifyAuth.setAccessToken(jsonResponse.get("access_token"));
         spotifyAuth.setRefreshToken(jsonResponse.get("refresh_token"));
 
+        return "redirect:/top-tracks";
+    }
+
+    @GetMapping("/top-tracks")
+    public String getTopTracks(Model model) {
         GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyAuth.getTopTracks();
 
         try {
@@ -71,7 +77,7 @@ public class IndexController {
             System.out.println(e.toString());
             model.addAttribute("error", e.toString());
         }
-        // access_token, token_type, expires_in, refresh_token, scope
+
         return "auth";
     }
 

@@ -2,6 +2,9 @@ package com.spotify.project.controllers;
 
 import com.google.gson.Gson;
 import com.spotify.project.authorisation.SpotifyAuth;
+import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.model_objects.specification.Track;
+import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
@@ -58,6 +61,17 @@ public class IndexController {
 
         spotifyAuth.getApi().setAccessToken(jsonResponse.get("access_token"));
         spotifyAuth.getApi().setRefreshToken(jsonResponse.get("refresh_token"));
+
+        GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyAuth.getApi().getUsersTopTracks().build();
+
+        try {
+            Paging<Track> trackPaging = getUsersTopTracksRequest.execute();
+            model.addAttribute("tracks", trackPaging.getItems());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            model.addAttribute("error", e.toString());
+        }
+        
 
         // access_token, token_type, expires_in, refresh_token, scope
 

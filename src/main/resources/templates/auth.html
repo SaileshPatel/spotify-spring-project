@@ -3,10 +3,15 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home Page</title>
+    <title>Top Tracks</title>
 </head>
 <body>
-<h1>Welcome</h1>
-<p></p>
+    <h1>Top Tracks</h1>
+    <table>
+        <tr><th>Name</th></tr>
+        <tr>
+            <td th:each="track: ${tracks}"><a th:href="${track.uri}"><p th:text="${track.name}"></p></a></td>
+        </tr>
+    </table>
 </body>
 </html>

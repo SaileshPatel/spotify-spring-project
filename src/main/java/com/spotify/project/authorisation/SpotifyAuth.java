@@ -38,6 +38,7 @@ public class SpotifyAuth {
         AuthorizationCodeUriRequest authUrlCode = api.authorizationCodeUri()
                 .client_id(getClientId())
                 .response_type("code")
+                .scope("user-top-read")
                 .show_dialog(true)
                 .build();
 

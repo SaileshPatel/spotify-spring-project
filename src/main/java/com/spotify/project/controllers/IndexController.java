@@ -59,8 +59,8 @@ public class IndexController {
 
         Map<String, String> jsonResponse = spotifyTokens(response);
 
-        spotifyAuth.getApi().setAccessToken(jsonResponse.get("access_token"));
-        spotifyAuth.getApi().setRefreshToken(jsonResponse.get("refresh_token"));
+        spotifyAuth.setAccessToken(jsonResponse.get("access_token"));
+        spotifyAuth.setRefreshToken(jsonResponse.get("refresh_token"));
 
         GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyAuth.getApi().getUsersTopTracks().build();
 

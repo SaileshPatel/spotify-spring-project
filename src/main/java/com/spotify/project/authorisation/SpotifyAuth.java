@@ -45,28 +45,6 @@ public class SpotifyAuth {
         return authUrlCode.execute();
     }
 
-    public void getTokens(String code) {
-        AuthorizationCodeRequest codeRequest = api.authorizationCode(code).build();
-        try {
-            AuthorizationCodeCredentials authCredentials = codeRequest.execute();
-            api.setAccessToken(authCredentials.getAccessToken());
-            api.setRefreshToken((authCredentials.getRefreshToken()));
-        } catch (Exception e){
-            System.out.println(e.toString());
-        }
-    }
-
-    public void refreshTokens() {
-        AuthorizationCodeRefreshRequest authRefresh = api.authorizationCodeRefresh().build();
-        try{
-            AuthorizationCodeCredentials authCredentials = authRefresh.execute();
-            api.setAccessToken(authCredentials.getAccessToken());
-            api.setRefreshToken(authCredentials.getRefreshToken());
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-    }
-
 
     public String getClientId() {
         return clientId;
@@ -79,4 +57,12 @@ public class SpotifyAuth {
     public URI getRedirectURI() { return redirectURI; }
 
     public SpotifyApi getApi() { return api; }
+
+    public void setAccessToken(String accessToken) {
+        api.setAccessToken(accessToken);
+    }
+
+    public void  setRefreshToken(String refreshToken) {
+        api.setRefreshToken(refreshToken);
+    }
 }

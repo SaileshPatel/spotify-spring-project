@@ -8,9 +8,17 @@
 <body>
     <h1>Top Tracks</h1>
     <table>
-        <tr><th>Name</th></tr>
         <tr>
-            <td th:each="track: ${tracks}"><a th:href="${track.uri}"><p th:text="${track.name}"></p></a></td>
+            <th>Name</th>
+            <th>Artist(s)</th>
+        </tr>
+        <tr th:each="track: ${tracks}">
+            <td><a th:href="${track.uri}"><p th:text="${track.name}"></p></a></td>
+            <td>
+                <ul th:each="artist: ${track.artists}">
+                    <li th:text="${artist.name}"></li>
+                </ul>
+            </td>
         </tr>
     </table>
 </body>

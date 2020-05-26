@@ -6,6 +6,7 @@ import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredential
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import com.wrapper.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,9 @@ public class SpotifyAuth {
 
     public void  setRefreshToken(String refreshToken) {
         api.setRefreshToken(refreshToken);
+    }
+
+    public GetUsersTopTracksRequest getTopTracks() {
+        return api.getUsersTopTracks().build();
     }
 }

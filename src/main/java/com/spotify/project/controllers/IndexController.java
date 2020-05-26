@@ -62,7 +62,7 @@ public class IndexController {
         spotifyAuth.setAccessToken(jsonResponse.get("access_token"));
         spotifyAuth.setRefreshToken(jsonResponse.get("refresh_token"));
 
-        GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyAuth.getApi().getUsersTopTracks().build();
+        GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyAuth.getTopTracks();
 
         try {
             Paging<Track> trackPaging = getUsersTopTracksRequest.execute();
@@ -71,11 +71,7 @@ public class IndexController {
             System.out.println(e.toString());
             model.addAttribute("error", e.toString());
         }
-        
-
         // access_token, token_type, expires_in, refresh_token, scope
-
-
         return "auth";
     }
 
@@ -88,7 +84,6 @@ public class IndexController {
     private Map<String, String> spotifyTokens(ResponseEntity<String> response) {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Gson gson = new Gson();
-
         Map<String, String> map = gson.fromJson(response.getBody(), type);
 
         return map;

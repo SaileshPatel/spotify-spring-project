@@ -6,8 +6,7 @@
         <title>Home Page</title>
     </head>
     <body>
-        <div th:insert="fragments/header :: header"></div>
-        <h1>Welcome</h1>
+        <div th:insert="fragments/header :: header(title='Index')"></div>
         <p><a th:href="${auth}">Login Here</a></p>
         <div th:insert="fragments/footer :: footer"></div>
     </body>

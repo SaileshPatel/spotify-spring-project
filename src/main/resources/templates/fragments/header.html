@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<header th:fragement="header">
-    <p>Welcome</p>
+<header th:fragment="header (title)">
+    <h1 th:text="${title}"></h1>
 </header>
 </html>

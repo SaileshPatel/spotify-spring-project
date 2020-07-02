@@ -40,7 +40,6 @@ public class IndexController {
                            @RequestParam(required = false) String state,
                            @RequestParam(required = false) String error,
                            Model model) {
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
